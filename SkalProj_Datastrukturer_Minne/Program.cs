@@ -34,7 +34,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParenthesis"
-                    + "\n5. Rekursiv Even"
+                    + "\n5. Rekursion vs Iteration"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -65,7 +65,7 @@ namespace SkalProj_Datastrukturer_Minne
                      * and iterative exercises.
                      */
                     case '5':
-                        TestRecursivEven();
+                        RekursionvsIteration();
                         break;
 
 
@@ -105,7 +105,7 @@ namespace SkalProj_Datastrukturer_Minne
             do
             {
                 char nav = ' ';
-                string value="";
+                string value = "";
                 try
                 {
                     string input = Console.ReadLine();
@@ -121,20 +121,24 @@ namespace SkalProj_Datastrukturer_Minne
 
                 switch (nav)
                 {
-                    case '+': theList.Add(value);       
+                    case '+':
+                        theList.Add(value);
                         break;
-                    case '-': theList.Remove(value);  
+                    case '-':
+                        theList.Remove(value);
                         break;
-                    case '0': finished = true;          
+                    case '0':
+                        finished = true;
                         break;
-                    default : Console.WriteLine("Enter some input, start the text with +/- exit with 0"); 
+                    default:
+                        Console.WriteLine("Enter some input, start the text with +/- exit with 0");
                         break;
                 }
 
                 Console.WriteLine($"Stored elements: {theList.Count} capacity: {theList.Capacity} ");
 
             } while (!finished);
-            Console.Clear ();
+            Console.Clear();
             /*
             Svar på frågor:
             2. Kapaciteten ökar när Adderat värde inte får plats i den underliggande arrayen. 
@@ -189,8 +193,8 @@ namespace SkalProj_Datastrukturer_Minne
                         theQueue.Enqueue(value);
                         break;
                     case '-':
-                        if(theQueue.Count > 0)
-                            Console.WriteLine (theQueue.Dequeue() );
+                        if (theQueue.Count > 0)
+                            Console.WriteLine(theQueue.Dequeue());
                         break;
                     case '0':
                         finished = true;
@@ -246,7 +250,7 @@ namespace SkalProj_Datastrukturer_Minne
                 } while (string.IsNullOrWhiteSpace(input));
 
 
-                if(input.Equals("0"))
+                if (input.Equals("0"))
                     finished = true;
                 else
                 {
@@ -257,13 +261,14 @@ namespace SkalProj_Datastrukturer_Minne
 
                     }
                     StringBuilder reverse = new StringBuilder();
-                    while(theStack.Count > 0)
+                    while (theStack.Count > 0)
                     {
-                        reverse.Append(theStack.Pop() );
+                        reverse.Append(theStack.Pop());
                         //Console.WriteLine($"Stored elements: {theList.Count} capacity: {theList.ToArray().Length} ");
-                    };
+                    }
+                    ;
 
-                    Console.WriteLine("Reversed: "+ reverse.ToString() );
+                    Console.WriteLine("Reversed: " + reverse.ToString());
 
                 }
 
@@ -303,7 +308,7 @@ namespace SkalProj_Datastrukturer_Minne
                 {
                     Console.WriteLine("Enter a line to check. exit with 0");
                     input = Console.ReadLine();
-                    
+
                 } while (string.IsNullOrWhiteSpace(input));
 
 
@@ -370,59 +375,163 @@ namespace SkalProj_Datastrukturer_Minne
 
         }
 
-
-
-
-        private static void TestRecursivEven()
+        private static void RekursionvsIteration()
         {
-            Console.Clear();
-            int q = RecursiveEven(3);
-            Console.WriteLine("-------------------------------------");
-            int w = Fibonacci(13);
-            Console.ReadLine();
-            Console.Clear();
-        }
+            bool finished = false;
 
-        //0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144
-        static int Fibonacci(int n)
-        {
-            if (n == 1)
+            do
             {
-                Console.WriteLine($"Arg: {n} returns 0");
-                return 0;
-            }
+                string input = "";
+                string seed = "";
+                int iSeed=0;
+                do
+                {
+                    Console.Clear();
+                    Console.WriteLine("1. Recursiv Even.");
+                    Console.WriteLine("2. Iterativ Even.");
+                    Console.WriteLine("3. Recursiv Fibonacci.");
+                    Console.WriteLine("4. Iterativ Fibonacci.");
+                    Console.WriteLine("0. Exit.");
 
-            if (n == 2)
-            {
-                Console.WriteLine($"Arg: {n} returns 1");
-                return 1;
-            }
+                    input = Console.ReadLine();
 
+                    if (string.Compare("0", input) == 0)
+                    {
+                        finished = true;
+                        break;
+                    }
 
-            int temp = (Fibonacci(n - 1) + Fibonacci(n - 2));
-            Console.WriteLine($"Arg: {n} returns {temp}");
-            return temp;
+                    if (string.Compare("1", input) == 0
+                    ||  string.Compare("2", input) == 0
+                    ||  string.Compare("3", input) == 0
+                    ||  string.Compare("4", input) == 0
+                    )
+                    {
+                        Console.Write("Ange antal anrop/iterationer:");
+                        seed = Console.ReadLine(); //Siffra att seeda med!
+                        if (!int.TryParse(seed, out iSeed))
+                            seed = null;
 
-            //return (Fibonacci(n - 1) + Fibonacci(n - 2));
+                    }
+                } while (string.IsNullOrWhiteSpace(input)
+                      || string.IsNullOrWhiteSpace(seed));
+
+                if (input.Equals("0"))
+                {
+                    finished = true;
+                    break;
+                }
+
+                switch (input)
+                {
+                    case "1":
+                        int q = RecursiveEven(iSeed);
+                        Console.WriteLine("\nSvar:" + q);
+                        Console.WriteLine("-------------------------------------");
+                        break;
+
+                    case "2":
+                        int x = IterativeEven(iSeed);
+                        Console.WriteLine("\nSvar:" + x);
+                        Console.WriteLine("-------------------------------------");
+                        break;
+
+                    case "3":
+                        (int, int) w = RecursivFibonacci(iSeed);
+                        Console.WriteLine("\nSvar:" + w.Item1);
+                        Console.WriteLine("-------------------------------------");
+                        break;
+
+                    case "4":
+                        int y = IterativFibonacci(iSeed);
+                        Console.WriteLine("\nSvar:" + y);
+                        Console.WriteLine("-------------------------------------");
+                        break;
+
+                    default:
+                        break;
+                }
+
+                Console.WriteLine("Press enter to continue...");
+                Console.ReadLine();
+
+            } while (!finished);
+            
+            Console.Clear();
         }
 
         static int RecursiveEven(int n)
         {
+            //Bryter om någon anropar med n<1, vilket aldrig skulle få metoden att vända...
+            if (n < 1) return 0;
             if (n == 1)
             {
-                Console.WriteLine($"Arg: {n} returns {2}");
+                Console.Write($"Recursiv even: {2}");
                 return 2;
             }
 
+            //Uppdelad på flera rader för att kunna printa ut serien.
             int temp = (RecursiveEven(n - 1) + 2);
-            Console.WriteLine($"Arg: {n} returns {temp}");
+            Console.Write($",{temp}");
             return temp;
 
+            //Utan utskrift... 
             //return (RecursiveEven(n - 1) + 2);
         }
+        static int IterativeEven(int n)
+        {
+            int result = 0;
+            Console.Write($"Iterativ even: ");
+            for (int i = 1; i <= n; i++)
+            {
+                result += 2;
+                if (i > 1)
+                    Console.Write($",{result}");
+                else
+                    Console.Write($" {result}");
+            }
+            return result;
+        }
 
+        static (int, int) RecursivFibonacci(int n)
+        {
+            //Bryter om någon anropar med negativt n, vilket aldrig skulle få metoden att vända...
+            if (n < 2) return (0, 0);
+            if (n == 2)
+            {
+                Console.Write($"Recursiv Fibonacci: 0,1");
+                //Metoden initieras med de två första värdena i serien.
+                return (1, 0);
+            }
 
+            //Returnerade värden summeras. Returnerar sedan de värden som ska summeras i nästa steg. 
+            (int, int) temp = RecursivFibonacci(n - 1);
+            Console.Write($",{temp.Item1 + temp.Item2}");
+            return ((temp.Item1 + temp.Item2), temp.Item1);
+            
+        }
 
+        static int IterativFibonacci(int n)
+        {
+            if (n < 2) return 0;
+            if (n < 3) return 1;
+            Console.Write($"Iterativ Fibonacci: 0,1");
+
+            int result = 0;
+            int temp1 = 1;
+            int temp2 = 0;
+
+            //De två första elementen är typ seed för serien
+            //så den riktiga beräkningen körs då n > 3
+            for (int i = 3; i <= n; i++)
+            {
+                result = temp1 + temp2;
+                temp2 = temp1;
+                temp1 = result;
+                Console.Write($",{result}");
+            }
+            return result;
+        }
     }
 }
 
