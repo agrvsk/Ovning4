@@ -375,6 +375,12 @@ namespace SkalProj_Datastrukturer_Minne
 
         }
 
+        /*
+        Se bild Rekursion vs Iteration.jpg
+        Rekursiva metoder kan vara farliga vid stort antal anrop 
+        eftersom stacken automatiskt fylls på.
+        Det sker inte för iterativa metoder se de verkar vara att föredra.
+        */
         private static void RekursionvsIteration()
         {
             bool finished = false;
